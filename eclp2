@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#09080d" />
+  <meta name="description" content="Eclyps Productions es una productora creativa dedicada a desarrollar historias, producciones audiovisuales y experiencias digitales." />
+  <title>Eclyps Productions® — Creamos mundos. Contamos historias.</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+    :root {
+      --bg: #09080d;
+      --surface: #111018;
+      --surface-2: #171421;
+      --text: #f5f2fa;
+      --muted: #a7a1b3;
+      --purple: #9b6cff;
+      --purple-bright: #b99aff;
+      --line: rgba(255,255,255,.11);
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "DM Sans", sans-serif;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse at 78% 12%, rgba(117, 63, 205, .17), transparent 35%),
+        radial-gradient(ellipse at 12% 62%, rgba(75, 43, 132, .10), transparent 35%);
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .wrap { width: min(var(--max), calc(100% - 48px)); margin: auto; }
+
+    .nav {
+      position: fixed;
+      z-index: 20;
+      top: 0; left: 0; right: 0;
+      border-bottom: 1px solid transparent;
+      transition: background .35s, border-color .35s, backdrop-filter .35s;
+    }
+    .nav.scrolled {
+      background: rgba(9,8,13,.78);
+      border-color: var(--line);
+      backdrop-filter: blur(18px);
+    }
+    .nav-inner {
+      height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand {
+      font: 700 1.3rem "Space Grotesk", sans-serif;
+      letter-spacing: .16em;
+    }
+    .brand span { color: var(--purple-bright); }
+    .nav-links { display: flex; gap: 34px; align-items: center; }
+    .nav-links a {
+      color: #c7c1d0;
+      font-size: .85rem;
+      transition: color .25s;
+    }
+    .nav-links a:hover { color: white; }
+    .nav-cta {
+      border: 1px solid rgba(185,154,255,.5);
+      border-radius: 999px;
+      padding: 11px 18px;
+      color: white !important;
+    }
+    .menu-btn { display: none; background: none; color: white; border: 0; font-size: 1.5rem; }
+
+    .hero {
+      min-height: 850px;
+      min-height: min(900px, 100svh);
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding: 150px 0 100px;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 50px;
+      align-items: center;
+    }
+    .eyebrow {
+      color: var(--purple-bright);
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: .24em;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--purple); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      font: 600 clamp(3.5rem, 8vw, 7.4rem)/.98 "Space Grotesk", sans-serif;
+      letter-spacing: -.075em;
+      margin: 26px 0;
+    }
+    h1 .accent {
+      color: transparent;
+      -webkit-text-stroke: 1px var(--purple-bright);
+    }
+    .hero-copy {
+      max-width: 510px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
+    .hero-actions { display: flex; gap: 14px; margin-top: 34px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      border-radius: 999px;
+      padding: 15px 22px;
+      font-weight: 600;
+      font-size: .88rem;
+      transition: transform .25s, box-shadow .25s, background .25s, border-color .25s;
+    }
+    .btn:hover { transform: translateY(-3px); }
+    .btn-primary {
+      color: #100b18;
+      background: var(--purple-bright);
+      box-shadow: 0 8px 35px rgba(155,108,255,.18);
+    }
+    .btn-primary:hover { box-shadow: 0 12px 45px rgba(155,108,255,.35); }
+    .btn-ghost { border: 1px solid var(--line); color: white; }
+    .btn-ghost:hover { border-color: rgba(185,154,255,.65); }
+
+    .orb-wrap { min-height: 430px; display: grid; place-items: center; position: relative; }
+    .orb {
+      width: min(390px, 75vw);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      position: relative;
+      background:
+        radial-gradient(circle at 35% 28%, rgba(255,255,255,.22), transparent 8%),
+        radial-gradient(circle at 38% 35%, #8e5be7 0%, #472477 26%, #171020 58%, #09080d 72%);
+      box-shadow: inset -30px -35px 65px rgba(0,0,0,.75), 0 0 100px rgba(137,83,225,.2);
+      animation: float 7s ease-in-out infinite;
+    }
+    .orb::before, .orb::after {
+      content: "";
+      position: absolute;
+      inset: -22px;
+      border: 1px solid rgba(185,154,255,.28);
+      border-radius: 50%;
+      transform: rotate(-24deg) scaleY(.34);
+    }
+    .orb::after { inset: -48px; transform: rotate(35deg) scaleY(.28); border-color: rgba(185,154,255,.15); }
+    .orb-label {
+      position: absolute;
+      bottom: 4%; right: -2%;
+      color: #d7c5ff;
+      font: 500 .72rem "Space Grotesk", sans-serif;
+      letter-spacing: .18em;
+    }
+    .scroll-note {
+      position: absolute;
+      bottom: 35px; left: 50%;
+      transform: translateX(-50%);
+      color: #777181;
+      font-size: .68rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    .section { padding: 125px 0; border-top: 1px solid var(--line); }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 30px;
+      margin-bottom: 55px;
+    }
+    .section h2 {
+      font: 600 clamp(2.5rem, 5vw, 4.5rem)/1.02 "Space Grotesk", sans-serif;
+      letter-spacing: -.065em;
+      margin: 18px 0 0;
+    }
+    .section-intro { max-width: 360px; color: var(--muted); line-height: 1.8; margin-bottom: 4px; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .about-statement {
+      font: 500 clamp(1.8rem, 3.4vw, 3rem)/1.2 "Space Grotesk", sans-serif;
+      letter-spacing: -.045em;
+    }
+    .about-statement span { color: var(--purple-bright); }
+    .about-detail { color: var(--muted); line-height: 1.9; max-width: 500px; }
+
+    .divisions { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .division {
+      min-height: 350px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 34px;
+      background: linear-gradient(145deg, rgba(255,255,255,.045), rgba(255,255,255,.012));
+      position: relative;
+      overflow: hidden;
+      transition: transform .4s, border-color .4s, background .4s;
+    }
+    .division:hover { transform: translateY(-8px); border-color: rgba(185,154,255,.5); background: linear-gradient(145deg, rgba(155,108,255,.12), rgba(255,255,255,.015)); }
+    .division-number { color: var(--purple-bright); font-size: .75rem; letter-spacing: .15em; }
+    .division h3 { font: 600 2.1rem "Space Grotesk", sans-serif; margin: 65px 0 12px; letter-spacing: -.05em; }
+    .division p { color: var(--muted); line-height: 1.7; max-width: 390px; }
+    .division-arrow { position: absolute; right: 32px; bottom: 30px; font-size: 1.5rem; color: var(--purple-bright); transition: transform .3s; }
+    .division:hover .division-arrow { transform: translate(5px,-5px); }
+    .division-glow {
+      position: absolute; width: 220px; height: 220px; border-radius: 50%;
+      background: rgba(133,83,215,.16); filter: blur(55px); right: -90px; top: -100px;
+      pointer-events: none;
+    }
+
+    .statement {
+      padding: 145px 0;
+      text-align: center;
+      background: radial-gradient(ellipse at center, rgba(105,64,174,.16), transparent 62%);
+    }
+    .statement p {
+      max-width: 900px; margin: 0 auto;
+      font: 500 clamp(2rem, 5vw, 4.8rem)/1.12 "Space Grotesk", sans-serif;
+      letter-spacing: -.06em;
+    }
+    .statement span { color: var(--purple-bright); }
+
+    .contact {
+      border: 1px solid rgba(185,154,255,.25);
+      border-radius: 24px;
+      padding: clamp(30px, 6vw, 70px);
+      background: linear-gradient(120deg, rgba(117,72,190,.16), rgba(255,255,255,.025));
+      display: flex; align-items: end; justify-content: space-between; gap: 30px;
+    }
+    .contact h2 { max-width: 650px; }
+    footer { padding: 35px 0; border-top: 1px solid var(--line); }
+    .footer-inner { display: flex; justify-content: space-between; gap: 20px; color: #827b8e; font-size: .76rem; }
+    .footer-links { display: flex; gap: 22px; }
+
+    /* El contenido permanece visible por defecto (también en visores que bloquean JS).
+       Las animaciones se activan únicamente cuando JavaScript está disponible. */
+    .reveal { opacity: 1; transform: none; }
+    .js .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+    .js .reveal.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: .12s; }
+    .delay-2 { transition-delay: .24s; }
+    .delay-3 { transition-delay: .36s; }
+
+    @keyframes float { 0%,100% { transform: translateY(0) rotate(-7deg); } 50% { transform: translateY(-20px) rotate(5deg); } }
+
+    @media (max-width: 800px) {
+      .nav-inner { height: 68px; }
+      .menu-btn { display: block; }
+      .nav-links {
+        display: none; position: absolute; top: 68px; left: 0; right: 0;
+        padding: 25px 24px 30px; background: rgba(9,8,13,.97);
+        border-bottom: 1px solid var(--line); flex-direction: column; align-items: flex-start; gap: 22px;
+      }
+      .nav-links.open { display: flex; }
+      .hero { min-height: auto; padding: 145px 0 100px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 10px; }
+      .orb-wrap { min-height: 340px; }
+      .orb { width: 260px; }
+      .orb-label { right: 10%; }
+      .scroll-note { display: none; }
+      .section { padding: 90px 0; }
+      .section-head, .about-grid, .contact { display: block; }
+      .section-intro { margin-top: 22px; }
+      .about-grid { gap: 25px; }
+      .about-detail { margin-top: 25px; }
+      .divisions { grid-template-columns: 1fr; }
+      .division { min-height: 300px; }
+      .division h3 { margin-top: 48px; }
+      .contact .btn { margin-top: 28px; }
+      .footer-inner { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      .js .reveal { opacity: 1; transform: none; }
+    }
+  
+    /* Normativa general */
+    .rules-section { position: relative; overflow: hidden; }
+    .rules-section::before { content:""; position:absolute; width:520px; height:520px; border-radius:50%; background:rgba(117,63,205,.10); filter:blur(100px); right:-260px; top:100px; pointer-events:none; }
+    .rules-gradient { color:transparent; background:linear-gradient(100deg,#c8adff,#8754dc 65%,#e0d4ff); -webkit-background-clip:text; background-clip:text; }
+    .rules-banner { display:flex; align-items:center; gap:22px; padding:24px 28px; margin-bottom:26px; border:1px solid rgba(185,154,255,.25); border-radius:20px; background:linear-gradient(110deg,rgba(155,108,255,.13),rgba(255,255,255,.025)); }
+    .rules-banner-mark { width:52px; height:52px; display:grid; place-items:center; border:1px solid rgba(185,154,255,.45); border-radius:15px; font:700 1.25rem "Space Grotesk"; color:#fff; box-shadow:0 0 35px rgba(155,108,255,.16); flex:none; }
+    .rules-banner-mark span { color:var(--purple-bright); }
+    .rules-banner strong { font:600 1rem "Space Grotesk"; }
+    .rules-banner p { margin:5px 0 0; color:var(--muted); font-size:.88rem; line-height:1.6; }
+    .rules-meta { margin-left:auto; display:grid; text-align:right; }
+    .rules-meta span { font:600 2rem "Space Grotesk"; color:var(--purple-bright); }
+    .rules-meta small,.rules-aside-label { color:#817a90; letter-spacing:.18em; font-size:.62rem; }
+    .rules-toolbar { display:flex; gap:12px; margin:0 0 20px; }
+    .rules-search { display:flex; align-items:center; gap:12px; flex:1; border:1px solid var(--line); background:rgba(255,255,255,.035); border-radius:12px; padding:0 16px; min-height:52px; color:var(--purple-bright); }
+    .rules-search span { font-size:1.5rem; }
+    .rules-search input { width:100%; background:transparent; color:white; border:0; outline:0; font:inherit; font-size:.88rem; }
+    .rules-search input::placeholder { color:#817b8c; }
+    .rules-search kbd { white-space:nowrap; color:#80798b; border:1px solid var(--line); padding:3px 6px; border-radius:5px; font-size:.65rem; }
+    .rules-expand { border:1px solid var(--line); background:rgba(255,255,255,.035); color:#e8e1f3; border-radius:12px; padding:0 17px; cursor:pointer; transition:.25s; }
+    .rules-expand:hover { border-color:rgba(185,154,255,.55); background:rgba(155,108,255,.1); }
+    .rules-layout { display:grid; grid-template-columns:210px 1fr; gap:28px; align-items:start; }
+    .rules-aside { position:sticky; top:105px; display:flex; flex-direction:column; gap:5px; padding:8px 0; }
+    .rules-aside-label { margin:0 0 10px 12px; }
+    .rules-aside a { color:#aaa3b6; padding:9px 12px; border-radius:8px; font-size:.78rem; transition:.2s; }
+    .rules-aside a:hover,.rules-aside a.active { color:white; background:rgba(155,108,255,.12); }
+    .rules-aside-note { margin:20px 8px 0; padding-top:16px; border-top:1px solid var(--line); color:#817b8b; font-size:.72rem; line-height:1.7; }
+    .rules-list { display:grid; gap:10px; }
+    .rule-card { border:1px solid var(--line); border-radius:15px; overflow:hidden; background:linear-gradient(120deg,rgba(255,255,255,.045),rgba(255,255,255,.015)); transition:border-color .3s,transform .3s,background .3s; }
+    .rule-card:hover { border-color:rgba(185,154,255,.35); transform:translateY(-2px); }
+    .rule-card.open { border-color:rgba(185,154,255,.48); background:linear-gradient(120deg,rgba(155,108,255,.09),rgba(255,255,255,.018)); }
+    .rule-toggle { width:100%; display:flex; align-items:center; gap:18px; padding:20px 22px; color:white; text-align:left; border:0; background:transparent; cursor:pointer; }
+    .rule-index { color:var(--purple-bright); font:600 .76rem "Space Grotesk"; letter-spacing:.08em; }
+    .rule-title { flex:1; font:600 1rem "Space Grotesk"; }
+    .rule-plus { width:28px; height:28px; display:grid; place-items:center; border:1px solid var(--line); border-radius:50%; color:var(--purple-bright); font-size:1.15rem; transition:transform .3s,background .3s; }
+    .rule-card.open .rule-plus { transform:rotate(45deg); background:rgba(155,108,255,.15); }
+    .rule-content { display:grid; grid-template-rows:0fr; transition:grid-template-rows .4s ease; }
+    .rule-card.open .rule-content { display:block; }
+    .rule-content-inner { padding:0 26px 24px 62px; animation:ruleIn .35s ease both; }
+    .rule-text { color:#bcb5c8; font-size:.86rem; line-height:1.85; margin:0 0 12px; }
+    .rule-text strong { color:#f2eaff; }
+    .rule-subitem { list-style:none; color:#aaa3b6; font-size:.84rem; line-height:1.8; margin:0 0 9px; padding-left:18px; position:relative; }
+    .rule-subitem::before { content:""; position:absolute; left:0; top:.8em; width:5px; height:5px; border-radius:50%; background:var(--purple-bright); }
+    .rule-bullet { list-style:none; color:#aaa3b6; font-size:.84rem; line-height:1.8; margin:0 0 7px; padding-left:18px; position:relative; }
+    .rule-bullet::before { content:""; position:absolute; left:0; top:.8em; width:5px; height:5px; border-radius:50%; background:var(--purple-bright); }
+    .rule-card[hidden] { display:none; }
+    .rules-footer { margin-top:30px; padding:30px; border:1px solid rgba(185,154,255,.22); border-radius:18px; background:radial-gradient(ellipse at 50% 0,rgba(155,108,255,.12),transparent 75%); text-align:center; }
+    .rules-footer p { max-width:780px; margin:0 auto 18px; color:#e4d9f7; font:500 clamp(1.1rem,2.3vw,1.6rem)/1.5 "Space Grotesk"; }
+    .rules-footer span { color:#837b90; font-size:.62rem; letter-spacing:.22em; }
+    @keyframes ruleIn { from { opacity:0; transform:translateY(-7px); } to { opacity:1; transform:none; } }
+    @media(max-width:800px) { .rules-layout { grid-template-columns:1fr; } .rules-aside { position:static; display:flex; flex-direction:row; overflow:auto; padding:0 0 8px; } .rules-aside-label,.rules-aside-note { display:none; } .rules-aside a { white-space:nowrap; border:1px solid var(--line); } }
+    @media(max-width:560px) { .rules-banner { padding:18px; gap:13px; } .rules-banner-mark { width:42px;height:42px; } .rules-meta { display:none; } .rules-toolbar { flex-direction:column; } .rules-expand { min-height:45px; } .rule-toggle { padding:17px 15px; gap:12px; } .rule-title { font-size:.9rem; } .rule-content-inner { padding:0 17px 20px 45px; } }
+
+  </style>
+</head>
+<body>
+  <header class="nav" id="navbar">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#inicio" aria-label="Eclyps, inicio">ECLYPS<span>®</span></a>
+      <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <nav class="nav-links" id="navLinks">
+        <a href="#nosotros">Nosotros</a>
+        <a href="#divisiones">Divisiones</a>
+        <a href="#normativa">Normativa</a>
+        <a href="#contacto" class="nav-cta">Contacto ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow reveal">Productora creativa independiente</div>
+          <h1 class="reveal delay-1">Historias que<br><span class="accent">trascienden.</span></h1>
+          <p class="hero-copy reveal delay-2">Somos Eclyps Productions: una productora dedicada a crear contenido audiovisual, desarrollar universos narrativos y dar vida a experiencias digitales.</p>
+          <div class="hero-actions reveal delay-3">
+            <a class="btn btn-primary" href="#divisiones">Conoce nuestras ramas <span>↗</span></a>
+            <a class="btn btn-ghost" href="#nosotros">Qué es Eclyps</a>
+          </div>
+        </div>
+        <div class="orb-wrap reveal delay-2" aria-label="Elemento visual abstracto morado">
+          <div class="orb"></div>
+          <div class="orb-label">BEYOND THE ORDINARY / 001</div>
+        </div>
+      </div>
+      <div class="scroll-note">Desliza para descubrir ↓</div>
+    </section>
+
+    <section class="section" id="nosotros">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow reveal">01 / Qué es Eclyps Productions</div>
+            <h2 class="reveal delay-1">Creatividad<br>en movimiento.</h2>
+          </div>
+          <p class="section-intro reveal delay-2">Eclyps Productions es una productora creativa que reúne proyectos audiovisuales y experiencias digitales bajo una misma identidad.</p>
+        </div>
+        <div class="about-grid">
+          <p class="about-statement reveal">Creamos ideas.<br><span>Les damos vida.</span></p>
+          <p class="about-detail reveal delay-1">Nuestro trabajo combina producción audiovisual, creatividad y desarrollo de experiencias interactivas. Creamos historias y proyectos digitales pensados para entretener, conectar comunidades y construir mundos propios. Eclyps Productions funciona como el proyecto principal del que nacen distintas ramas creativas.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="divisiones">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow reveal">02 / Nuestras ramas</div>
+            <h2 class="reveal delay-1">Un proyecto.<br>Distintos mundos.</h2>
+          </div>
+          <p class="section-intro reveal delay-2">Eclyps Productions reúne distintas iniciativas. Cada rama tiene su propio enfoque, pero comparte nuestra identidad creativa.</p>
+        </div>
+        <div class="divisions">
+          <a class="division reveal" href="#contacto">
+            <div class="division-glow"></div>
+            <div class="division-number">PROYECTO PRINCIPAL / AUDIOVISUAL</div>
+            <h3>Producciones</h3>
+            <p>Desarrollamos cortometrajes, historias cinematográficas y contenido audiovisual, especialmente dentro de plataformas como Roblox y Minecraft.</p>
+            <span class="division-arrow">↗</span>
+          </a>
+          <a class="division reveal delay-1" href="#contacto">
+            <div class="division-glow"></div>
+            <div class="division-number">RAMA 001 / ROLEPLAY</div>
+            <h3>Eclyps RP</h3>
+            <p>Nuestra rama dedicada al roleplay: experiencias narrativas donde la comunidad puede interpretar personajes, desarrollar historias y formar parte de un mundo compartido.</p>
+            <span class="division-arrow">↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    
+  <section class="section rules-section" id="normativa">
+    <div class="wrap">
+      <div class="section-head rules-heading">
+        <div>
+          <div class="eyebrow">Marco de convivencia · Eclyps</div>
+          <h2>Normativa<br><span class="rules-gradient">general.</span></h2>
+        </div>
+        <p class="section-intro">Reglas de convivencia y funcionamiento para el servidor de rol de Brookhaven (Roblox) y su comunidad de Discord.</p>
+      </div>
+
+      <div class="rules-banner">
+        <div class="rules-banner-mark">E<span>/</span></div>
+        <div>
+          <strong>Lee antes de participar.</strong>
+          <p>La permanencia en el servidor implica el conocimiento y la aceptación íntegra de este reglamento.</p>
+        </div>
+        <div class="rules-meta"><span>08</span><small>ARTÍCULOS</small></div>
+      </div>
+
+      <div class="rules-toolbar">
+        <label class="rules-search">
+          <span aria-hidden="true">⌕</span>
+          <input id="ruleSearch" type="search" placeholder="Buscar una regla, sanción o concepto..." aria-label="Buscar en la normativa">
+          <kbd>⌘ K</kbd>
+        </label>
+        <button class="rules-expand" id="expandRules" type="button">Expandir todo <span>＋</span></button>
+      </div>
+
+      <div class="rules-layout">
+        <aside class="rules-aside">
+          <span class="rules-aside-label">ÍNDICE</span>
+          <a href="#rule-0">Disposiciones preliminares</a>
+          <a href="#rule-1">Artículo 1</a><a href="#rule-2">Artículo 2</a><a href="#rule-3">Artículo 3</a><a href="#rule-4">Artículo 4</a><a href="#rule-5">Artículo 5</a><a href="#rule-6">Artículo 6</a><a href="#rule-7">Artículo 7</a>
+          <div class="rules-aside-note">La normativa puede ser modificada por la administración. Consulta siempre la versión vigente.</div>
+        </aside>
+        <div class="rules-list" id="rulesList">
+          <article class="rule-card rule-intro" id="rule-0" data-search="disposiciones preliminares objeto ámbito aplicación brookhaven discord">
+            <button class="rule-toggle" type="button" aria-expanded="false">
+              <span class="rule-index">00</span><span class="rule-title">Disposiciones preliminares</span><span class="rule-plus">+</span>
+            </button>
+            <div class="rule-content" hidden><div class="rule-content-inner">
+              <p class="rule-text"><strong>Artículo 0: Del objeto y ámbito de aplicación</strong></p>
+              <p class="rule-text">0.1. La presente normativa tiene por objeto regular la conducta de los jugadores dentro del servidor de rol de Brookhaven, a fin de garantizar una experiencia ordenada, coherente y respetuosa para toda la comunidad.</p><p class="rule-text">0.2. Sus disposiciones son de observancia obligatoria para todos los jugadores, sin distinción de rango, antigüedad o jerarquía, tanto dentro del servidor de Roblox como en el servidor de Discord asociado.</p><p class="rule-text">0.3. La permanencia en el servidor implica el conocimiento y la aceptación íntegra de este reglamento.</p>
+            </div></div>
+          </article>
+      <article class="rule-card" data-search="artículo 1: del correcto uso de los comandos de rol 1.1. comando de aclaración fuera del rol (“//”).
+toda aclaración, comentario o consulta ajena al roleplay deberá escribirse precedida de “//”. esto permite distinguir con claridad lo que expresa el jugador de lo que expresa su personaje. 1.1.1. el uso de este comando deberá ser moderado y limitado a lo estrictamente necesario. su empleo en más de cinco (5) ocasiones consecutivas se considerará “anti-rol”, pues interrumpe el desarrollo de la escena. 1.2. estado “fuera de rol” u “off rol”.
+ambas expresiones constituyen comandos que deberán colocarse en el nickname (nombre de usuario) cuando el jugador se encuentre temporalmente fuera del rol. mientras el jugador porte este estado, su personaje no podrá ser objeto de interacciones de rol. 1.2.1. su uso por un periodo superior a cinco (5) minutos se considerará “anti-rol”. transcurrido ese lapso, el jugador deberá reincorporarse al rol o recurrir al comando “afk”, según corresponda. 1.2.2. su uso queda prohibido durante peleas, discusiones o cualquier otra situación de rol que involucre la vida del personaje. activarlo en tales circunstancias para evadir las consecuencias del rol se considerará “anti-rol”. 1.3. estado “afk” (away from keyboard).
+cuando el jugador deba ausentarse del rol por más de cinco (5) minutos, podrá utilizar el comando “afk”. su tolerancia máxima será de treinta (30) minutos o hasta que el juego expulse automáticamente al jugador por inactividad (aproximadamente veinte [20] minutos), lo que ocurra primero. 1.3.1. su uso queda prohibido durante peleas, discusiones o cualquier otra situación de rol que involucre la vida del personaje. su incumplimiento se considerará “anti-rol”. 1.3.2. un jugador en estado “afk” no podrá ser agredido, secuestrado ni sometido a situaciones de rol sin su consentimiento. 1.4. simulación de acciones (“*”).
+para simular una acción que no pueda realizarse mediante emotes u objetos del juego, será obligatorio colocar asteriscos “*” al inicio y al final de la acción. ejemplo: *saluda*. 1.4.1. de no hacerse, la acción no será tomada en cuenta dentro del rol, se considerará “anti-rol” y podrá ser sancionada conforme al artículo 2. 1.4.2. las acciones deberán ser breves, claras y verosímiles. las acciones que excedan las capacidades normales de un personaje serán consideradas “fail rol”, conforme al artículo 3.">
+        <button class="rule-toggle" type="button" aria-expanded="false">
+          <span class="rule-index">02</span>
+          <span class="rule-title">Artículo 1: Del correcto uso de los comandos de rol</span>
+          <span class="rule-plus" aria-hidden="true">+</span>
+        </button>
+        <div class="rule-content" hidden>
+          <div class="rule-content-inner"><p class="rule-text">1.1. Comando de aclaración fuera del rol (“//”).
+Toda aclaración, comentario o consulta ajena al Roleplay deberá escribirse precedida de “//”. Esto permite distinguir con claridad lo que expresa el jugador de lo que expresa su personaje.</p>
+<p class="rule-text">1.1.1. El uso de este comando deberá ser moderado y limitado a lo estrictamente necesario. Su empleo en más de cinco (5) ocasiones consecutivas se considerará “Anti-Rol”, pues interrumpe el desarrollo de la escena.</p>
+<p class="rule-text">1.2. Estado “Fuera de Rol” u “Off Rol”.
+Ambas expresiones constituyen comandos que deberán colocarse en el nickname (nombre de usuario) cuando el jugador se encuentre temporalmente fuera del rol. Mientras el jugador porte este estado, su personaje no podrá ser objeto de interacciones de rol.</p>
+<p class="rule-text">1.2.1. Su uso por un periodo superior a cinco (5) minutos se considerará “Anti-Rol”. Transcurrido ese lapso, el jugador deberá reincorporarse al rol o recurrir al comando “AFK”, según corresponda.</p>
+<p class="rule-text">1.2.2. Su uso queda prohibido durante peleas, discusiones o cualquier otra situación de rol que involucre la vida del personaje. Activarlo en tales circunstancias para evadir las consecuencias del rol se considerará “Anti-Rol”.</p>
+<p class="rule-text">1.3. Estado “AFK” (Away From Keyboard).
+Cuando el jugador deba ausentarse del rol por más de cinco (5) minutos, podrá utilizar el comando “AFK”. Su tolerancia máxima será de treinta (30) minutos o hasta que el juego expulse automáticamente al jugador por inactividad (aproximadamente veinte [20] minutos), lo que ocurra primero.</p>
+<p class="rule-text">1.3.1. Su uso queda prohibido durante peleas, discusiones o cualquier otra situación de rol que involucre la vida del personaje. Su incumplimiento se considerará “Anti-Rol”.</p>
+<p class="rule-text">1.3.2. Un jugador en estado “AFK” no podrá ser agredido, secuestrado ni sometido a situaciones de rol sin su consentimiento.</p>
+<p class="rule-text">1.4. Simulación de acciones (“*”).
+Para simular una acción que no pueda realizarse mediante emotes u objetos del juego, será OBLIGATORIO colocar asteriscos “*” al inicio y al final de la acción. Ejemplo: *saluda*.</p>
+<p class="rule-text">1.4.1. De no hacerse, la acción no será tomada en cuenta dentro del rol, se considerará “Anti-Rol” y podrá ser sancionada conforme al Artículo 2.</p>
+<p class="rule-text">1.4.2. Las acciones deberán ser breves, claras y verosímiles. Las acciones que excedan las capacidades normales de un personaje serán consideradas “Fail Rol”, conforme al Artículo 3.</p></div>
+        </div>
+      </article>
+      <article class="rule-card" data-search="artículo 2: de las sanciones 2.1. advertencia.
+se aplicará ante la infracción de un artículo de carácter no grave. constituye una llamada de atención formal y quedará registrada en el expediente del jugador. 2.1.1. la acumulación de tres (3) advertencias derivará automáticamente en un warn. 2.2. warn.
+es una sanción de alto impacto en el expediente del jugador. se aplicará por infracciones graves o por la acumulación de advertencias. 2.2.1. al acumularse seis (6) warns, se aplicará un baneo cuyo nivel dependerá de las causas que originaron dichos warns, conforme al artículo 2.3. 2.2.2. toda sanción deberá ser notificada al jugador, indicando el artículo infringido y los hechos que la motivaron. 2.3. baneo.
+existen tres (3) niveles, cada uno con su respectiva duración, determinados por la naturaleza y la gravedad de la causa. 2.3.1. nivel 1. duración: una (1) semana. causas: “anti-rol”, mal uso de los comandos de rol y faltas de respeto leves. 2.3.2. nivel 2. duración: un (1) mes. causas: faltas de respeto graves cometidas valiéndose de la posición jerárquica. 2.3.3. nivel 3. duración: permanente. causas: a) acoso, discriminación y amenazas reales hacia cualquier miembro de la comunidad. b) suplantación de identidad del personal, de los directivos o de otros jugadores. c) evasión de baneos mediante cuentas alternas. d) conductas de índole sexual o inapropiada, tales como “sexting” y “grooming”, así como cualquier contacto de esta naturaleza con menores de edad. e) divulgación de datos personales (“doxing”), intentos de obtención fraudulenta de información o credenciales (“phishing”) y suplantación de identidad con fines de engaño (“catfishing”). f) cualquier acto en contra del servidor de discord o del servidor de roblox, incluyendo, de manera enunciativa mas no limitativa, “raids”, spam masivo, invitaciones no autorizadas, explotación de fallos (“exploits”), uso de “hacks” o “scripts”, difusión de enlaces maliciosos y cualquier intento de dañar, vulnerar o desestabilizar la comunidad. g) cualquier acto en contra de los dueños, directivos o miembros del personal administrativo, incluyendo insultos graves, amenazas, difamación, campañas de desprestigio o incitación a terceros a actuar en su contra. h) incitar, colaborar o participar en cualquiera de las conductas anteriores, aun cuando no se ejecuten directamente. i) reincidencia en las causas del nivel 2. 2.3.4. el personal podrá omitir las sanciones graduales y aplicar directamente el nivel de baneo que corresponda cuando la gravedad de la conducta lo justifique. 2.3.5. toda sanción deberá sustentarse en evidencia verificable (capturas de pantalla, grabaciones o registros del chat).">
+        <button class="rule-toggle" type="button" aria-expanded="false">
+          <span class="rule-index">03</span>
+          <span class="rule-title">Artículo 2: De las sanciones</span>
+          <span class="rule-plus" aria-hidden="true">+</span>
+        </button>
+        <div class="rule-content" hidden>
+          <div class="rule-content-inner"><p class="rule-text">2.1. Advertencia.
+Se aplicará ante la infracción de un artículo de carácter no grave. Constituye una llamada de atención formal y quedará registrada en el expediente del jugador.</p>
+<p class="rule-text">2.1.1. La acumulación de tres (3) advertencias derivará automáticamente en un Warn.</p>
+<p class="rule-text">2.2. Warn.
+Es una sanción de alto impacto en el expediente del jugador. Se aplicará por infracciones graves o por la acumulación de advertencias.</p>
+<p class="rule-text">2.2.1. Al acumularse seis (6) Warns, se aplicará un baneo cuyo nivel dependerá de las causas que originaron dichos Warns, conforme al Artículo 2.3.</p>
+<p class="rule-text">2.2.2. Toda sanción deberá ser notificada al jugador, indicando el artículo infringido y los hechos que la motivaron.</p>
+<p class="rule-text">2.3. Baneo.
+Existen tres (3) niveles, cada uno con su respectiva duración, determinados por la naturaleza y la gravedad de la causa.</p>
+<p class="rule-text">2.3.1. Nivel 1.</p>
+<p class="rule-text">Duración: una (1) semana.</p>
+<p class="rule-text">Causas: “Anti-Rol”, mal uso de los comandos de rol y faltas de respeto leves.</p>
+<p class="rule-text">2.3.2. Nivel 2.</p>
+<p class="rule-text">Duración: un (1) mes.</p>
+<p class="rule-text">Causas: faltas de respeto graves cometidas valiéndose de la posición jerárquica.</p>
+<p class="rule-text">2.3.3. Nivel 3.</p>
+<p class="rule-text">Duración: permanente.</p>
+<p class="rule-text">Causas: a) Acoso, discriminación y amenazas reales hacia cualquier miembro de la comunidad. b) Suplantación de identidad del personal, de los directivos o de otros jugadores. c) Evasión de baneos mediante cuentas alternas. d) Conductas de índole sexual o inapropiada, tales como “sexting” y “grooming”, así como cualquier contacto de esta naturaleza con menores de edad. e) Divulgación de datos personales (“doxing”), intentos de obtención fraudulenta de información o credenciales (“phishing”) y suplantación de identidad con fines de engaño (“catfishing”). f) Cualquier acto en contra del servidor de Discord o del servidor de Roblox, incluyendo, de manera enunciativa mas no limitativa, “raids”, spam masivo, invitaciones no autorizadas, explotación de fallos (“exploits”), uso de “hacks” o “scripts”, difusión de enlaces maliciosos y cualquier intento de dañar, vulnerar o desestabilizar la comunidad. g) Cualquier acto en contra de los dueños, directivos o miembros del personal administrativo, incluyendo insultos graves, amenazas, difamación, campañas de desprestigio o incitación a terceros a actuar en su contra. h) Incitar, colaborar o participar en cualquiera de las conductas anteriores, aun cuando no se ejecuten directamente. i) Reincidencia en las causas del Nivel 2.</p>
+<p class="rule-text">2.3.4. El personal podrá omitir las sanciones graduales y aplicar directamente el nivel de baneo que corresponda cuando la gravedad de la conducta lo justifique.</p>
+<p class="rule-text">2.3.5. Toda sanción deberá sustentarse en evidencia verificable (capturas de pantalla, grabaciones o registros del chat).</p></div>
+        </div>
+      </article>
+      <article class="rule-card" data-search="artículo 3: de la conducta dentro del rol 3.1. fail rol.
+se prohíbe realizar acciones que contradigan la lógica del entorno o la naturaleza del personaje, tales como ignorar heridas graves, volar o atravesar objetos sólidos (los cuales también están penados respecto al artículo 2.3.3) sanción: advertencia. en el caso de las ultimas dos, baneo nivel 3. 3.2. metagaming.
+se prohíbe utilizar dentro del rol información obtenida fuera de este (chats externos, discord, transmisiones o conversaciones fuera de rol). el personaje únicamente conoce aquello que ha presenciado o vivido dentro del rol. sanción: advertencia. 3.3. powergaming.
+se prohíbe imponer acciones o resultados a otro jugador sin otorgarle la oportunidad de responder, por ejemplo: te golpea y te deja inconsciente. toda acción que afecte a un tercero deberá permitir su reacción. sanción: advertencia. 3.4. random death match (rdm).
+se prohíbe agredir, atacar o eliminar a otros jugadores sin una justificación de rol previa, coherente y desarrollada. sanción: warn. 3.5. vehicle death match (vdm).
+se prohíbe atropellar o dañar deliberadamente a otros jugadores con vehículos sin una justificación de rol. sanción: warn. 3.6. troll y entorpecimiento del rol.
+se prohíbe interrumpir deliberadamente el rol ajeno mediante bloqueos, spam, ruido excesivo, uso abusivo de objetos o cualquier conducta que busque entorpecer la experiencia de los demás jugadores. sanción: de advertencia a warn, según la gravedad y la reincidencia. 3.7. reincidencia.
+la repetición de una misma infracción podrá agravar la sanción aplicable, a criterio del personal competente.">
+        <button class="rule-toggle" type="button" aria-expanded="false">
+          <span class="rule-index">04</span>
+          <span class="rule-title">Artículo 3: De la conducta dentro del rol</span>
+          <span class="rule-plus" aria-hidden="true">+</span>
+        </button>
+        <div class="rule-content" hidden>
+          <div class="rule-content-inner"><p class="rule-text">3.1. Fail Rol.
+Se prohíbe realizar acciones que contradigan la lógica del entorno o la naturaleza del personaje, tales como ignorar heridas graves, volar o atravesar objetos sólidos (los cuales también están penados respecto al artículo 2.3.3)</p>
+<p class="rule-text">Sanción: Advertencia. En el caso de las ultimas dos, baneo nivel 3.</p>
+<p class="rule-text">3.2. Metagaming.
+Se prohíbe utilizar dentro del rol información obtenida fuera de este (chats externos, Discord, transmisiones o conversaciones fuera de rol). El personaje únicamente conoce aquello que ha presenciado o vivido dentro del rol. Sanción: Advertencia.</p>
+<p class="rule-text">3.3. Powergaming.
+Se prohíbe imponer acciones o resultados a otro jugador sin otorgarle la oportunidad de responder, por ejemplo: te golpea y te deja inconsciente. Toda acción que afecte a un tercero deberá permitir su reacción. Sanción: Advertencia.</p>
+<p class="rule-text">3.4. Random Death Match (RDM).
+Se prohíbe agredir, atacar o eliminar a otros jugadores sin una justificación de rol previa, coherente y desarrollada. Sanción: Warn.</p>
+<p class="rule-text">3.5. Vehicle Death Match (VDM).
+Se prohíbe atropellar o dañar deliberadamente a otros jugadores con vehículos sin una justificación de rol. Sanción: Warn.</p>
+<p class="rule-text">3.6. Troll y entorpecimiento del rol.
+Se prohíbe interrumpir deliberadamente el rol ajeno mediante bloqueos, spam, ruido excesivo, uso abusivo de objetos o cualquier conducta que busque entorpecer la experiencia de los demás jugadores. Sanción: de Advertencia a Warn, según la gravedad y la reincidencia.</p>
+<p class="rule-text">3.7. Reincidencia.
+La repetición de una misma infracción podrá agravar la sanción aplicable, a criterio del personal competente.</p></div>
+        </div>
+      </article>
+      <article class="rule-card" data-search="artículo 4: de la vida del personaje 4.1. consentimiento.
+ningún personaje podrá ser eliminado, secuestrado o sometido a situaciones graves sin el consentimiento expreso del jugador, otorgado mediante “//”. 4.2. rol coherente en situaciones de riesgo.
+toda situación que ponga en riesgo la vida del personaje deberá desarrollarse mediante rol coherente y detallado, sin recurrir a comandos de ausencia (“fuera de rol” o “afk”), conforme a los artículos 1.2.2 y 1.3.1. 4.3. nueva vida.
+tras la muerte de un personaje, el jugador deberá abstenerse de regresar al lugar del suceso y de recordar lo ocurrido durante su nueva interpretación. sanción: warn. 4.4. limitaciones del consentimiento.
+el consentimiento otorgado para una situación determinada no se extiende a otras. si el jugador lo retira, deberá respetarse de inmediato.">
+        <button class="rule-toggle" type="button" aria-expanded="false">
+          <span class="rule-index">05</span>
+          <span class="rule-title">Artículo 4: De la vida del personaje</span>
+          <span class="rule-plus" aria-hidden="true">+</span>
+        </button>
+        <div class="rule-content" hidden>
+          <div class="rule-content-inner"><p class="rule-text">4.1. Consentimiento.
+Ningún personaje podrá ser eliminado, secuestrado o sometido a situaciones graves sin el consentimiento expreso del jugador, otorgado mediante “//”.</p>
+<p class="rule-text">4.2. Rol coherente en situaciones de riesgo.
+Toda situación que ponga en riesgo la vida del personaje deberá desarrollarse mediante rol coherente y detallado, sin recurrir a comandos de ausencia (“Fuera de Rol” o “AFK”), conforme a los artículos 1.2.2 y 1.3.1.</p>
+<p class="rule-text">4.3. Nueva Vida.
+Tras la muerte de un personaje, el jugador deberá abstenerse de regresar al lugar del suceso y de recordar lo ocurrido durante su nueva interpretación. Sanción: Warn.</p>
+<p class="rule-text">4.4. Limitaciones del consentimiento.
+El consentimiento otorgado para una situación determinada no se extiende a otras. Si el jugador lo retira, deberá respetarse de inmediato.</p></div>
+        </div>
+      </article>
+      <article class="rule-card" data-search="artículo 5: del respeto y la jerarquía 5.1. trato cordial.
+todos los jugadores deberán mantener un trato cordial y respetuoso hacia los demás miembros de la comunidad, independientemente de su rango, antigüedad o nivel de participación. 5.2. acatamiento de indicaciones.
+las indicaciones del personal (moderadores, administradores y directivos) deberán acatarse de inmediato. cualquier desacuerdo podrá exponerse posteriormente a través de los canales de apelación establecidos, y nunca de forma pública, ofensiva o desafiante. 5.3. prohibición del abuso de autoridad.
+el personal con rango jerárquico tiene prohibido abusar de su posición para beneficiarse o perjudicar a otros jugadores. su incumplimiento será sancionado conforme al artículo 2.3.2. 5.4. imparcialidad.
+el personal deberá aplicar la normativa con imparcialidad, sin favoritismos ni represalias personales. 5.5. cuentas alternas.
+se prohíbe el uso de cuentas alternas para evadir sanciones, obtener ventajas indebidas o suplantar a otros miembros, conforme al artículo 2.3.3.">
+        <button class="rule-toggle" type="button" aria-expanded="false">
+          <span class="rule-index">06</span>
+          <span class="rule-title">Artículo 5: Del respeto y la jerarquía</span>
+          <span class="rule-plus" aria-hidden="true">+</span>
+        </button>
+        <div class="rule-content" hidden>
+          <div class="rule-content-inner"><p class="rule-text">5.1. Trato cordial.
+Todos los jugadores deberán mantener un trato cordial y respetuoso hacia los demás miembros de la comunidad, independientemente de su rango, antigüedad o nivel de participación.</p>
+<p class="rule-text">5.2. Acatamiento de indicaciones.
+Las indicaciones del personal (moderadores, administradores y directivos) deberán acatarse de inmediato. Cualquier desacuerdo podrá exponerse posteriormente a través de los canales de apelación establecidos, y nunca de forma pública, ofensiva o desafiante.</p>
+<p class="rule-text">5.3. Prohibición del abuso de autoridad.
+El personal con rango jerárquico tiene prohibido abusar de su posición para beneficiarse o perjudicar a otros jugadores. Su incumplimiento será sancionado conforme al Artículo 2.3.2.</p>
+<p class="rule-text">5.4. Imparcialidad.
+El personal deberá aplicar la normativa con imparcialidad, sin favoritismos ni represalias personales.</p>
+<p class="rule-text">5.5. Cuentas alternas.
+Se prohíbe el uso de cuentas alternas para evadir sanciones, obtener ventajas indebidas o suplantar a otros miembros, conforme al Artículo 2.3.3.</p></div>
+        </div>
+      </article>
+      <article class="rule-card" data-search="artículo 6: de las apelaciones y disposiciones finales 6.1. derecho de apelación.
+todo jugador sancionado podrá presentar una apelación por los canales oficiales dentro de un plazo de siete (7) días naturales contados a partir de la notificación de la sanción. 6.2. requisitos.
+la apelación deberá exponer los hechos de manera clara y respetuosa e incluir, de ser posible, la evidencia que respalde la solicitud. 6.3. revisión.
+el personal competente revisará cada apelación con imparcialidad y comunicará su resolución al jugador por el mismo canal en que fue presentada. 6.4. casos de nivel 3.
+las apelaciones relativas a baneos de nivel 3 serán resueltas exclusivamente por la dirección del servidor. 6.5. desconocimiento.
+el desconocimiento de la presente normativa no exime de responsabilidad ni del cumplimiento de las sanciones. 6.6. modificaciones.
+la administración se reserva el derecho de modificar, ampliar o suprimir los artículos de esta normativa, notificando oportunamente los cambios a la comunidad.">
+        <button class="rule-toggle" type="button" aria-expanded="false">
+          <span class="rule-index">07</span>
+          <span class="rule-title">Artículo 6: De las apelaciones y disposiciones finales</span>
+          <span class="rule-plus" aria-hidden="true">+</span>
+        </button>
+        <div class="rule-content" hidden>
+          <div class="rule-content-inner"><p class="rule-text">6.1. Derecho de apelación.
+Todo jugador sancionado podrá presentar una apelación por los canales oficiales dentro de un plazo de siete (7) días naturales contados a partir de la notificación de la sanción.</p>
+<p class="rule-text">6.2. Requisitos.
+La apelación deberá exponer los hechos de manera clara y respetuosa e incluir, de ser posible, la evidencia que respalde la solicitud.</p>
+<p class="rule-text">6.3. Revisión.
+El personal competente revisará cada apelación con imparcialidad y comunicará su resolución al jugador por el mismo canal en que fue presentada.</p>
+<p class="rule-text">6.4. Casos de Nivel 3.
+Las apelaciones relativas a baneos de Nivel 3 serán resueltas exclusivamente por la dirección del servidor.</p>
+<p class="rule-text">6.5. Desconocimiento.
+El desconocimiento de la presente normativa no exime de responsabilidad ni del cumplimiento de las sanciones.</p>
+<p class="rule-text">6.6. Modificaciones.
+La administración se reserva el derecho de modificar, ampliar o suprimir los artículos de esta normativa, notificando oportunamente los cambios a la comunidad.</p></div>
+        </div>
+      </article>
+      <article class="rule-card" data-search="artículo 7: de los derechos de autor y la propiedad intelectual 7.1. propiedad de los materiales.
+los logotipos, insignias, banners, imágenes, diseños, textos, reglamentos, plantillas, videos y demás archivos creados, publicados o distribuidos por el servidor o por su personal administrativo constituyen propiedad intelectual exclusiva del servidor, salvo que se indique expresamente lo contrario. 7.2. logotipos e identidad visual.
+el nombre, el logotipo, los colores institucionales y cualquier elemento de la identidad visual del servidor no podrán ser utilizados, copiados, modificados ni reproducidos sin autorización previa y por escrito de la dirección. 7.3. archivos enviados por el personal administrativo.
+los archivos, documentos, imágenes, guías, capturas o cualquier material remitido por el personal administrativo a los jugadores, ya sea por discord, roblox o cualquier otro medio, son de carácter confidencial y de uso exclusivo para el fin con el que fueron entregados. queda prohibido compartirlos, filtrarlos, publicarlos, venderlos o reutilizarlos sin la autorización correspondiente. 7.4. prohibiciones específicas.
+queda expresamente prohibido: a) reproducir, alterar o distribuir los materiales del servidor con fines personales, comerciales o ajenos a la comunidad. b) utilizar el nombre o el logotipo del servidor para crear comunidades, grupos, cuentas o servidores que puedan generar confusión o simular una afiliación oficial. c) presentar como propios los diseños, documentos o materiales creados por el servidor o por su personal. d) filtrar o divulgar documentos internos, conversaciones o archivos del personal administrativo. 7.5. contenido creado por los jugadores.
+los jugadores conservan la autoría de sus creaciones originales (por ejemplo, historias de personajes o diseños propios). no obstante, al publicarlas en los canales del servidor, otorgan a este una autorización no exclusiva para exhibirlas dentro de la comunidad. queda prohibido publicar contenido que infrinja derechos de terceros. 7.6. material de terceros.
+todo material protegido por derechos de autor perteneciente a terceros (música, imágenes, marcas, etc.) deberá utilizarse conforme a las normas de roblox y discord. el servidor no se hace responsable por el uso indebido que los jugadores realicen de dichos materiales. 7.7. sanciones.
+la infracción de este artículo será sancionada con warn o con baneo de nivel 3, según la gravedad, y especialmente cuando se trate de filtraciones, suplantación del servidor o uso comercial no autorizado, conforme al artículo 2.3.3. el servidor podrá además solicitar la eliminación del contenido infractor ante las plataformas correspondientes. “la administración reafirma su compromiso con la protección de la comunidad y con la preservación de un entorno de rol ordenado, respetuoso y seguro para todos sus integrantes.”">
+        <button class="rule-toggle" type="button" aria-expanded="false">
+          <span class="rule-index">08</span>
+          <span class="rule-title">Artículo 7: De los derechos de autor y la propiedad intelectual</span>
+          <span class="rule-plus" aria-hidden="true">+</span>
+        </button>
+        <div class="rule-content" hidden>
+          <div class="rule-content-inner"><p class="rule-text">7.1. Propiedad de los materiales.
+Los logotipos, insignias, banners, imágenes, diseños, textos, reglamentos, plantillas, videos y demás archivos creados, publicados o distribuidos por el servidor o por su personal administrativo constituyen propiedad intelectual exclusiva del servidor, salvo que se indique expresamente lo contrario.</p>
+<p class="rule-text">7.2. Logotipos e identidad visual.
+El nombre, el logotipo, los colores institucionales y cualquier elemento de la identidad visual del servidor no podrán ser utilizados, copiados, modificados ni reproducidos sin autorización previa y por escrito de la dirección.</p>
+<p class="rule-text">7.3. Archivos enviados por el personal administrativo.
+Los archivos, documentos, imágenes, guías, capturas o cualquier material remitido por el personal administrativo a los jugadores, ya sea por Discord, Roblox o cualquier otro medio, son de carácter confidencial y de uso exclusivo para el fin con el que fueron entregados. Queda prohibido compartirlos, filtrarlos, publicarlos, venderlos o reutilizarlos sin la autorización correspondiente.</p>
+<p class="rule-text">7.4. Prohibiciones específicas.
+Queda expresamente prohibido:</p>
+<li class="rule-subitem">a) Reproducir, alterar o distribuir los materiales del servidor con fines personales, comerciales o ajenos a la comunidad.</li>
+<li class="rule-subitem">b) Utilizar el nombre o el logotipo del servidor para crear comunidades, grupos, cuentas o servidores que puedan generar confusión o simular una afiliación oficial.</li>
+<li class="rule-subitem">c) Presentar como propios los diseños, documentos o materiales creados por el servidor o por su personal.</li>
+<li class="rule-subitem">d) Filtrar o divulgar documentos internos, conversaciones o archivos del personal administrativo.</li>
+<p class="rule-text">7.5. Contenido creado por los jugadores.
+Los jugadores conservan la autoría de sus creaciones originales (por ejemplo, historias de personajes o diseños propios). No obstante, al publicarlas en los canales del servidor, otorgan a este una autorización no exclusiva para exhibirlas dentro de la comunidad. Queda prohibido publicar contenido que infrinja derechos de terceros.</p>
+<p class="rule-text">7.6. Material de terceros.
+Todo material protegido por derechos de autor perteneciente a terceros (música, imágenes, marcas, etc.) deberá utilizarse conforme a las normas de Roblox y Discord. El servidor no se hace responsable por el uso indebido que los jugadores realicen de dichos materiales.</p>
+<p class="rule-text">7.7. Sanciones.
+La infracción de este artículo será sancionada con Warn o con Baneo de Nivel 3, según la gravedad, y especialmente cuando se trate de filtraciones, suplantación del servidor o uso comercial no autorizado, conforme al Artículo 2.3.3. El servidor podrá además solicitar la eliminación del contenido infractor ante las plataformas correspondientes.</p>
+<p class="rule-text">“La Administración reafirma su compromiso con la protección de la comunidad y con la preservación de un entorno de rol ordenado, respetuoso y seguro para todos sus integrantes.”</p></div>
+        </div>
+      </article>
+        </div>
+      </div>
+      <div class="rules-footer">
+        <p>“La Administración reafirma su compromiso con la protección de la comunidad y con la preservación de un entorno de rol ordenado, respetuoso y seguro para todos sus integrantes.”</p>
+        <span>EClyps · NORMATIVA GENERAL</span>
+      </div>
+    </div>
+  </section>
+
+<section class="statement">
+      <div class="wrap reveal">
+        <div class="eyebrow" style="justify-content:center">La visión de Eclyps</div>
+        <p>De una idea pueden nacer mundos enteros. Nosotros trabajamos para <span>hacerlos realidad.</span></p>
+      </div>
+    </section>
+
+    <section class="section" id="contacto">
+      <div class="wrap">
+        <div class="contact reveal">
+          <div>
+            <div class="eyebrow">03 / Contacto</div>
+            <h2>¿Tienes una historia que contar?</h2>
+            <p class="section-intro">Estamos abiertos a nuevas ideas, proyectos creativos y colaboraciones.</p>
+          </div>
+          <a class="btn btn-primary" href="mailto:eclyps.org@gmail.com">Escríbenos ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <div>© <span id="year"></span> ECLYPS PRODUCTIONS. Todos los derechos reservados.</div>
+      <div class="footer-links">
+        <a href="#inicio">Volver arriba ↑</a>
+        <span>Hecho para imaginar.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.documentElement.classList.add("js");
+    const navbar = document.getElementById("navbar");
+    const menuBtn = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
+
+    window.addEventListener("scroll", () => {
+      navbar.classList.toggle("scrolled", window.scrollY > 24);
+    });
+
+    menuBtn.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      menuBtn.setAttribute("aria-expanded", String(isOpen));
+      menuBtn.textContent = isOpen ? "×" : "☰";
+    });
+
+    navLinks.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuBtn.setAttribute("aria-expanded", "false");
+        menuBtn.textContent = "☰";
+      });
+    });
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".reveal").forEach(element => observer.observe(element));
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+
+  <script>
+    // Normativa: acordeones accesibles, búsqueda en vivo e índice interactivo.
+    (() => {
+      const cards = [...document.querySelectorAll('.rule-card')];
+      const search = document.getElementById('ruleSearch');
+      const expand = document.getElementById('expandRules');
+      const toggles = document.querySelectorAll('.rule-toggle');
+      toggles.forEach(btn => btn.addEventListener('click', () => {
+        const card = btn.closest('.rule-card');
+        const content = card.querySelector('.rule-content');
+        const opening = !card.classList.contains('open');
+        card.classList.toggle('open', opening);
+        btn.setAttribute('aria-expanded', String(opening));
+        content.hidden = !opening;
+      }));
+      if (expand) expand.addEventListener('click', () => {
+        const shouldOpen = cards.some(c => !c.classList.contains('open') && !c.hidden);
+        cards.forEach(card => {
+          if (card.hidden) return;
+          card.classList.toggle('open', shouldOpen);
+          card.querySelector('.rule-toggle').setAttribute('aria-expanded', String(shouldOpen));
+          card.querySelector('.rule-content').hidden = !shouldOpen;
+        });
+        expand.innerHTML = shouldOpen ? 'Contraer todo <span>−</span>' : 'Expandir todo <span>＋</span>';
+      });
+      if (search) search.addEventListener('input', () => {
+        const q = search.value.trim().toLocaleLowerCase('es');
+        cards.forEach(card => {
+          const match = !q || (card.dataset.search || '').includes(q);
+          card.hidden = !match;
+          if (q && match) {
+            card.classList.add('open');
+            card.querySelector('.rule-toggle').setAttribute('aria-expanded','true');
+            card.querySelector('.rule-content').hidden = false;
+          } else if (!q) {
+            card.classList.remove('open');
+            card.querySelector('.rule-toggle').setAttribute('aria-expanded','false');
+            card.querySelector('.rule-content').hidden = true;
+          }
+        });
+      });
+      document.addEventListener('keydown', e => {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+          e.preventDefault(); search?.focus();
+        }
+      });
+      document.querySelectorAll('.rules-aside a').forEach(link => link.addEventListener('click', () => {
+        document.querySelectorAll('.rules-aside a').forEach(a => a.classList.remove('active'));
+        link.classList.add('active');
+      }));
+    })();
+  </script>
+
+</body>
+</html>
